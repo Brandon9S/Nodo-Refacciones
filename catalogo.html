@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Explora publicaciones de refacciones para motocicleta en Nodo Refacciones.">
+    <title>Explorar refacciones | Nodo Refacciones</title>
+    <link rel="icon" type="image/svg+xml" href="assets/img/favicon_nodo.png">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <a class="skip-link" href="#contenido">Saltar al contenido</a>
+    <nav class="navbar navbar-expand-lg navbar-dark site-navbar sticky-top">
+        <div class="container">
+            <a class="navbar-brand brand-lockup" href="index.html"><img src="assets/img/favicon_nodo.png" alt="" width="34" height="34"><span>NODO <small>REFACCIONES</small></span></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuPrincipal" aria-controls="menuPrincipal" aria-expanded="false" aria-label="Abrir menú"><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="menuPrincipal"><ul class="navbar-nav ms-auto align-items-lg-center gap-lg-2">
+                <li class="nav-item"><a class="nav-link" href="index.html">Inicio</a></li><li class="nav-item"><a class="nav-link active" aria-current="page" href="catalogo.html">Explorar</a></li><li class="nav-item"><a class="nav-link" href="publicar.html">Publicar</a></li><li class="nav-item"><a class="nav-link" href="historia.html">Historia</a></li><li class="nav-item"><a class="nav-link" href="cuenta.html" data-account-link>Mi cuenta</a></li>
+                    <li class="nav-item ms-lg-2"><a class="btn btn-crimson btn-sm px-3" href="publicar.html">Ofrecer una pieza</a></li>
+            </ul></div>
+        </div>
+    </nav>
+
+    <main id="contenido" class="container py-5">
+        <header class="page-intro mb-4"><span class="eyebrow">Encuentra opciones</span><h1>Explorar refacciones</h1><p class="lead text-muted">Busca refacciones para motocicleta y filtra por categoría, condición y marca.</p></header>
+        <section class="filter-panel mb-4" aria-label="Filtros del catálogo">
+            <div class="row g-3 align-items-end">
+                <div class="col-12 col-lg-4"><label class="form-label" for="filtroTexto">Buscar</label><input class="form-control" type="search" id="filtroTexto" placeholder="Nombre, marca, modelo o descripción"></div>
+                <div class="col-6 col-lg-2"><label class="form-label" for="filtroCategoria">Categoría</label><select class="form-select" id="filtroCategoria"><option value="">Todas</option><option>Motor</option><option>Frenos</option><option>Carrocería</option><option>Eléctrico</option><option>Accesorios</option></select></div>
+                <div class="col-6 col-lg-2"><label class="form-label" for="filtroCondicion">Condición</label><select class="form-select" id="filtroCondicion"><option value="">Todas</option><option>Nuevo</option><option>Usado</option><option>Reacondicionado</option></select></div>
+                <div class="col-6 col-lg-2"><label class="form-label" for="filtroMarca">Marca</label><select class="form-select" id="filtroMarca"><option value="">Todas</option><option>Bajaj</option><option>Italika</option><option>Yamaha</option><option>Universal</option></select></div>
+                <div class="col-6 col-lg-2"><button class="btn btn-outline-light w-100" type="button" id="limpiarFiltros">Limpiar filtros</button></div>
+            </div>
+        </section>
+        <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3"><p class="small text-muted mb-0" id="contadorResultados" aria-live="polite">Cargando resultados…</p><a class="text-link" href="publicar.html">¿Tienes una pieza? Publícala →</a></div>
+        <div class="row g-3" id="listaPublicaciones"></div>
+        <div class="empty-state d-none" id="sinResultados"><h2>No encontramos publicaciones</h2><p class="text-muted">Prueba con otros términos o elimina algunos filtros.</p><button class="btn btn-outline-light" id="limpiarDesdeVacio" type="button">Limpiar búsqueda</button></div>
+    </main>
+
+    <footer class="site-footer"><div class="container py-4"><div class="row g-3 align-items-center"><div class="col-md"><a class="footer-brand" href="index.html">NODO <span>REFACCIONES</span></a><p class="small footer-tagline mb-0">Encuentra la pieza. Conecta con quien la tiene.</p></div><div class="col-md-auto footer-links"><a href="historia.html">Historia</a><a href="catalogo.html">Explorar</a><a href="publicar.html">Publicar</a><a href="cuenta.html">Mi cuenta</a></div><div class="col-12"><div class="footer-bottom">© <span class="current-year"></span> Nodo Refacciones · Proyecto académico de FrontEnd.</div></div></div></div></footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+    <script src="js/data.js"></script><script src="js/main.js"></script><script src="js/auth.js"></script><script src="js/catalogo.js"></script>
+</body>
+</html>

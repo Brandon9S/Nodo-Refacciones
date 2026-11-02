@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Publica una refacción en Nodo Refacciones.">
+    <title>Publicar una refacción | Nodo Refacciones</title>
+    <link rel="icon" type="image/svg+xml" href="assets/img/favicon_nodo.png">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <a class="skip-link" href="#contenido">Saltar al contenido</a>
+    <nav class="navbar navbar-expand-lg navbar-dark site-navbar sticky-top">
+        <div class="container">
+            <a class="navbar-brand brand-lockup" href="index.html"><img src="assets/img/favicon_nodo.png" alt="" width="34" height="34"><span>NODO <small>REFACCIONES</small></span></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuPrincipal" aria-controls="menuPrincipal" aria-expanded="false" aria-label="Abrir menú"><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="menuPrincipal"><ul class="navbar-nav ms-auto align-items-lg-center gap-lg-2">
+                <li class="nav-item"><a class="nav-link" href="index.html">Inicio</a></li><li class="nav-item"><a class="nav-link" href="catalogo.html">Explorar</a></li><li class="nav-item"><a class="nav-link active" aria-current="page" href="publicar.html">Publicar</a></li><li class="nav-item"><a class="nav-link" href="historia.html">Historia</a></li><li class="nav-item"><a class="nav-link" href="cuenta.html" data-account-link>Mi cuenta</a></li>
+                    <li class="nav-item ms-lg-2"><a class="btn btn-crimson btn-sm px-3" href="publicar.html">Ofrecer una pieza</a></li>
+            </ul></div>
+        </div>
+    </nav>
+
+    <main id="contenido" class="container py-5">
+        <header class="page-intro mb-4"><span class="eyebrow">Comparte lo que tienes</span><h1>Publicar una refacción</h1><p class="lead text-muted">Registra los datos de la pieza y elige cómo quieres recibir interesados.</p></header>
+        <div class="alert alert-warning d-none mb-4" id="avisoCuentaPublicar" role="status">
+            Para publicar una refacción primero necesitas <a href="cuenta.html" class="alert-link">iniciar sesión o crear una cuenta</a>.
+        </div>
+        <div class="row g-4 align-items-start d-none" id="contenidoPublicacion">
+            <div class="col-lg-8">
+                <form id="formPublicacion" class="form-panel" novalidate>
+                    <div class="form-section-heading"><span>01</span><div><h2>Información de la pieza</h2><p>Los campos marcados con * son obligatorios.</p></div></div>
+                    <div class="row g-3">
+                        <div class="col-12"><label class="form-label" for="titulo">Nombre de la refacción *</label><input class="form-control" id="titulo" name="titulo" type="text" maxlength="90" placeholder="Ej. Espejo lateral derecho para motocicleta"><div class="invalid-feedback">Escribe un nombre de al menos 4 caracteres.</div></div>
+                        <div class="col-md-6"><label class="form-label" for="categoria">Categoría *</label><select class="form-select" id="categoria" name="categoria"><option value="">Selecciona una categoría</option><option>Motor</option><option>Frenos</option><option>Carrocería</option><option>Eléctrico</option><option>Accesorios</option></select><div class="invalid-feedback">Selecciona una categoría.</div></div>
+                        <div class="col-md-6"><label class="form-label" id="etiquetaCondicion">Condición *</label><div class="d-flex flex-wrap gap-3 pt-1" id="grupoCondicion" role="radiogroup" aria-labelledby="etiquetaCondicion"><div class="form-check"><input class="form-check-input" type="radio" name="condicion" id="condicionNuevo" value="Nuevo"><label class="form-check-label" for="condicionNuevo">Nuevo</label></div><div class="form-check"><input class="form-check-input" type="radio" name="condicion" id="condicionUsado" value="Usado"><label class="form-check-label" for="condicionUsado">Usado</label></div><div class="form-check"><input class="form-check-input" type="radio" name="condicion" id="condicionReacondicionado" value="Reacondicionado"><label class="form-check-label" for="condicionReacondicionado">Reacondicionado</label></div></div><div class="invalid-feedback">Selecciona la condición de la pieza.</div></div>
+                        <div class="col-md-6"><label class="form-label" for="precio">Precio (MXN) *</label><input class="form-control" id="precio" name="precio" type="number" step="0.01" placeholder="Ej. 450"><div class="invalid-feedback">Ingresa un precio válido, igual o mayor a cero.</div></div>
+                        <div class="col-md-6"><label class="form-label" for="codigoPieza">Número o código de pieza</label><input class="form-control" id="codigoPieza" name="codigoPieza" type="text" maxlength="50" placeholder="Opcional"></div>
+                        <div class="col-12"><label class="form-label" for="descripcion">Descripción *</label><textarea class="form-control" id="descripcion" name="descripcion" rows="3" maxlength="600" placeholder="Describe el estado, detalles y características de la refacción."></textarea><div class="invalid-feedback">Escribe una descripción de al menos 15 caracteres.</div></div>
+                    </div>
+
+                    <div class="form-section-heading mt-4"><span>02</span><div><h2>Compatibilidad de la motocicleta</h2><p>Completa los datos que conozcas. La versión y el color son opcionales.</p></div></div>
+                    <div class="row g-3">
+                        <div class="col-md-6"><label class="form-label" for="marcaMoto">Marca *</label><input class="form-control" id="marcaMoto" name="marcaMoto" type="text" maxlength="50" placeholder="Ej. Bajaj"><div class="invalid-feedback">Indica la marca de la motocicleta.</div></div>
+                        <div class="col-md-6"><label class="form-label" for="modeloMoto">Modelo *</label><input class="form-control" id="modeloMoto" name="modeloMoto" type="text" maxlength="70" placeholder="Ej. Pulsar NS125"><div class="invalid-feedback">Indica el modelo.</div></div>
+                        <div class="col-md-3"><label class="form-label" for="anioMoto">Año *</label><input class="form-control" id="anioMoto" name="anioMoto" type="number" step="1" placeholder="Ej. 2023"><div class="invalid-feedback">Ingresa un año válido.</div></div>
+                        <div class="col-md-3"><label class="form-label" for="versionMoto">Versión</label><input class="form-control" id="versionMoto" name="versionMoto" type="text" maxlength="50" placeholder="Opcional"></div>
+                        <div class="col-md-6"><label class="form-label" for="colorMoto">Color</label><input class="form-control" id="colorMoto" name="colorMoto" type="text" maxlength="40" placeholder="Opcional"></div>
+                    </div>
+
+                    <div class="form-section-heading mt-4"><span>03</span><div><h2>Modalidad de publicación</h2><p>Indica dónde se realizará el contacto o la operación.</p></div></div>
+                    <div class="row g-3">
+                        <div class="col-12"><label class="form-label" for="modalidad">¿Cómo ofreces la pieza? *</label><select class="form-select" id="modalidad" name="modalidad"><option value="">Selecciona una modalidad</option><option value="directa">Venta directa entre particulares</option><option value="comercio">Comercio o vendedor independiente</option><option value="externa">Enlace a publicación externa</option></select><div class="invalid-feedback">Selecciona una modalidad.</div></div>
+                        <div class="col-md-6" id="grupoVendedor"><label class="form-label" for="vendedor">Nombre del vendedor o comercio *</label><input class="form-control" id="vendedor" name="vendedor" type="text" maxlength="70" placeholder="Nombre que verá el público"><div class="invalid-feedback">Escribe el nombre del vendedor.</div></div>
+                        <div class="col-md-6" id="grupoContacto"><label class="form-label" for="contacto">Correo o teléfono de contacto *</label><input class="form-control" id="contacto" name="contacto" type="text" maxlength="100" placeholder="correo@ejemplo.com o teléfono"><div class="invalid-feedback">Ingresa un correo o teléfono válido.</div></div>
+                        <div class="col-12 d-none" id="grupoEnlace"><label class="form-label" for="enlaceExterno">Enlace de la publicación original *</label><input class="form-control" id="enlaceExterno" name="enlaceExterno" type="url" placeholder="https://..."><div class="invalid-feedback">Ingresa una dirección web válida que comience con https:// o http://.</div></div>
+                    </div>
+                    <div class="form-check mt-4"><input class="form-check-input" type="checkbox" id="confirmacion"><label class="form-check-label" for="confirmacion">Confirmo que la información proporcionada es correcta. *</label><div class="invalid-feedback">Debes confirmar la información antes de publicar.</div></div>
+                    <div class="d-flex flex-wrap gap-2 mt-4"><button class="btn btn-crimson" type="submit">Publicar refacción</button><button class="btn btn-outline-light" type="button" id="limpiarFormulario">Limpiar formulario</button></div>
+                    <div class="alert alert-success mt-3 d-none" id="mensajeExito" role="status"></div>
+                </form>
+            </div>
+            <aside class="col-lg-4">
+                <div class="sidebar-note"><span class="eyebrow">Antes de publicar</span><h2>Información clara genera confianza.</h2><p>Describe cualquier detalle que pueda afectar el estado o la compatibilidad de la pieza.</p><ul><li>Comprueba marca, modelo y año.</li><li>Agrega el número de parte si lo conoces.</li><li>Verifica que el contacto o enlace esté actualizado.</li></ul><div class="note-divider"></div><p class="small text-muted mb-0">Las publicaciones se guardan en el almacenamiento local de tu navegador y no se envían a ningún servidor.</p></div>
+            </aside>
+        </div>
+    </main>
+
+    <footer class="site-footer"><div class="container py-4"><div class="row g-3 align-items-center"><div class="col-md"><a class="footer-brand" href="index.html">NODO <span>REFACCIONES</span></a><p class="small footer-tagline mb-0">Encuentra la pieza. Conecta con quien la tiene.</p></div><div class="col-md-auto footer-links"><a href="historia.html">Historia</a><a href="catalogo.html">Explorar</a><a href="publicar.html">Publicar</a><a href="cuenta.html">Mi cuenta</a></div><div class="col-12"><div class="footer-bottom">© <span class="current-year"></span> Nodo Refacciones · Proyecto académico de FrontEnd.</div></div></div></div></footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+    <script src="js/main.js"></script><script src="js/auth.js"></script><script src="js/publicar.js"></script>
+</body>
+</html>

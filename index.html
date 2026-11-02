@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Nodo Refacciones conecta a personas que buscan y ofrecen refacciones para motocicletas.">
+    <title>Nodo Refacciones | Inicio</title>
+    <link rel="icon" type="image/svg+xml" href="assets/img/favicon_nodo.png">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <a class="skip-link" href="#contenido">Saltar al contenido</a>
+
+    <nav class="navbar navbar-expand-lg navbar-dark site-navbar sticky-top">
+        <div class="container">
+            <a class="navbar-brand brand-lockup" href="index.html">
+                <img src="assets/img/favicon_nodo.png" alt="" width="34" height="34">
+                <span>NODO <small>REFACCIONES</small></span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuPrincipal" aria-controls="menuPrincipal" aria-expanded="false" aria-label="Abrir menú">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="menuPrincipal">
+                <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-2">
+                    <li class="nav-item"><a class="nav-link active" aria-current="page" href="index.html">Inicio</a></li>
+                    <li class="nav-item"><a class="nav-link" href="catalogo.html">Explorar</a></li>
+                    <li class="nav-item"><a class="nav-link" href="publicar.html">Publicar</a></li>
+                    <li class="nav-item"><a class="nav-link" href="historia.html">Historia</a></li>
+                    <li class="nav-item"><a class="nav-link" href="cuenta.html" data-account-link>Mi cuenta</a></li>
+                    <li class="nav-item ms-lg-2"><a class="btn btn-crimson btn-sm px-3" href="publicar.html">Ofrecer una pieza</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main id="contenido">
+        <section class="container py-4 py-lg-5">
+            <div class="hero-banner">
+                <img src="assets/img/banner_nodo.png" alt="" class="hero-banner-img">
+                <div class="hero-banner-shade"></div>
+                <div class="hero-content">
+                    <span class="eyebrow">Un punto de encuentro para el mundo de las motos</span>
+                    <h1>La pieza que buscas.<br><span>La conexión que necesitas.</span></h1>
+                    <p>Explora publicaciones de particulares, comercios y plataformas externas en un solo lugar.</p>
+                    <div class="d-flex flex-wrap gap-2">
+                        <a class="btn btn-crimson" href="catalogo.html">Explorar refacciones</a>
+                        <a class="btn btn-outline-light" href="publicar.html">Publicar una pieza</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="container pb-5">
+            <div class="section-heading mb-3">
+                <div>
+                    <span class="eyebrow">Búsqueda rápida</span>
+                    <h2>¿Qué refacción necesitas?</h2>
+                </div>
+                <span class="section-mark" aria-hidden="true"></span>
+            </div>
+            <form class="search-panel row g-2 align-items-end" action="catalogo.html" method="get">
+                <div class="col-12 col-md">
+                    <label class="form-label" for="busquedaInicio">Nombre de la pieza, marca o modelo</label>
+                    <input class="form-control" type="search" id="busquedaInicio" name="q" placeholder="Ej. espejo Pulsar NS125">
+                </div>
+                <div class="col-12 col-md-auto">
+                    <button class="btn btn-crimson w-100" type="submit">Buscar refacciones</button>
+                </div>
+            </form>
+            <div class="quick-categories mt-3">
+                <span class="text-muted small me-2">Explora por categoría:</span>
+                <a href="catalogo.html?categoria=Motor">Motor</a>
+                <a href="catalogo.html?categoria=Frenos">Frenos</a>
+                <a href="catalogo.html?categoria=Carrocería">Carrocería</a>
+                <a href="catalogo.html?categoria=Eléctrico">Eléctrico</a>
+            </div>
+        </section>
+
+        <section class="container pb-5">
+            <div class="section-heading mb-3">
+                <div>
+                    <span class="eyebrow">Del catálogo</span>
+                    <h2>Publicaciones recientes</h2>
+                </div>
+                <a class="text-link" href="catalogo.html">Ver catálogo completo <span aria-hidden="true">→</span></a>
+            </div>
+            <div class="row g-3" id="publicacionesRecientes">
+                <div class="col-12"><p class="text-muted">Cargando publicaciones…</p></div>
+            </div>
+        </section>
+
+        <section class="container pb-5">
+            <div class="row g-4 align-items-stretch">
+                <div class="col-lg-7">
+                    <div class="feature-panel h-100">
+                        <span class="eyebrow">¿Cómo funciona?</span>
+                        <h2>Distintas opciones.<br>Un mismo punto de búsqueda.</h2>
+                        <p class="text-muted">Nodo reúne publicaciones de quienes venden por cuenta propia, pequeños comercios y vendedores que utilizan otras plataformas.</p>
+                        <div class="row g-3 mt-2">
+                            <div class="col-sm-4"><div class="mini-feature"><span>01</span><strong>Busca</strong><small>Filtra por pieza y motocicleta.</small></div></div>
+                            <div class="col-sm-4"><div class="mini-feature"><span>02</span><strong>Compara</strong><small>Revisa opciones y condiciones.</small></div></div>
+                            <div class="col-sm-4"><div class="mini-feature"><span>03</span><strong>Conecta</strong><small>Contacta o visita el sitio vendedor.</small></div></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-5">
+                    <div class="date-panel h-100">
+                        <span class="eyebrow">Hoy en Nodo</span>
+                        <h2 id="fechaActual">Consultando fecha…</h2>
+                        <p class="text-muted mb-0">Consulta la fecha de hoy sin salir de Nodo.</p>
+                        <div class="date-rule"></div>
+                        <p class="small text-muted mb-0">Una comunidad para encontrar, ofrecer y compartir refacciones de motocicleta.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="container pb-5">
+            <div class="section-heading mb-3">
+                <div>
+                    <span class="eyebrow">Herramienta</span>
+                    <h2>Calculadora rápida</h2>
+                </div>
+            </div>
+            <div class="calculator-panel">
+                <p class="text-muted text-center">Realiza operaciones básicas sin salir de la página.</p>
+                <div class="calculator-widget" id="calculadora" aria-label="Calculadora básica">
+                    <output class="calculator-display" id="calculadoraPantalla" aria-live="polite" aria-atomic="true">0</output>
+                    <div class="calculator-keys">
+                        <button class="calculator-key calculator-key-clear" type="button" data-calculator-action="clear" aria-label="Borrar todo">AC</button>
+                        <button class="calculator-key calculator-key-utility" type="button" data-calculator-action="backspace" aria-label="Borrar último dígito">⌫</button>
+                        <button class="calculator-key calculator-key-utility" type="button" data-calculator-action="sign" aria-label="Cambiar signo">±</button>
+                        <button class="calculator-key calculator-key-operator" type="button" data-calculator-operator="/" aria-label="Dividir">÷</button>
+
+                        <button class="calculator-key" type="button" data-calculator-digit="7">7</button>
+                        <button class="calculator-key" type="button" data-calculator-digit="8">8</button>
+                        <button class="calculator-key" type="button" data-calculator-digit="9">9</button>
+                        <button class="calculator-key calculator-key-operator" type="button" data-calculator-operator="*" aria-label="Multiplicar">×</button>
+
+                        <button class="calculator-key" type="button" data-calculator-digit="4">4</button>
+                        <button class="calculator-key" type="button" data-calculator-digit="5">5</button>
+                        <button class="calculator-key" type="button" data-calculator-digit="6">6</button>
+                        <button class="calculator-key calculator-key-operator" type="button" data-calculator-operator="-" aria-label="Restar">−</button>
+
+                        <button class="calculator-key" type="button" data-calculator-digit="1">1</button>
+                        <button class="calculator-key" type="button" data-calculator-digit="2">2</button>
+                        <button class="calculator-key" type="button" data-calculator-digit="3">3</button>
+                        <button class="calculator-key calculator-key-operator" type="button" data-calculator-operator="+" aria-label="Sumar">+</button>
+
+                        <button class="calculator-key calculator-key-zero" type="button" data-calculator-digit="0">0</button>
+                        <button class="calculator-key" type="button" data-calculator-action="decimal" aria-label="Punto decimal">.</button>
+                        <button class="calculator-key calculator-key-equals" type="button" data-calculator-action="equals" aria-label="Calcular resultado">=</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container py-4">
+            <div class="row g-3 align-items-center">
+                <div class="col-md">
+                    <a class="footer-brand" href="index.html">NODO <span>REFACCIONES</span></a>
+                    <p class="small footer-tagline mb-0">Encuentra la pieza. Conecta con quien la tiene.</p>
+                </div>
+                <div class="col-md-auto footer-links">
+                    <a href="historia.html">Historia</a>
+                    <a href="catalogo.html">Explorar</a>
+                    <a href="publicar.html">Publicar</a>
+                </div>
+                <div class="col-12"><div class="footer-bottom">© <span class="current-year"></span> Nodo Refacciones · Proyecto académico de FrontEnd.</div></div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+    <script src="js/data.js"></script>
+    <script src="js/main.js"></script><script src="js/auth.js"></script>
+    <script src="js/home.js"></script>
+</body>
+</html>

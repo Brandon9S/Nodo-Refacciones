@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Crea tu cuenta o administra tus publicaciones en Nodo Refacciones.">
+    <title>Mi cuenta | Nodo Refacciones</title>
+    <link rel="icon" type="image/svg+xml" href="assets/img/favicon_nodo.png">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <a class="skip-link" href="#contenido">Saltar al contenido</a>
+    <nav class="navbar navbar-expand-lg navbar-dark site-navbar sticky-top">
+        <div class="container">
+            <a class="navbar-brand brand-lockup" href="index.html"><img src="assets/img/favicon_nodo.png" alt="" width="34" height="34"><span>NODO <small>REFACCIONES</small></span></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuPrincipal" aria-controls="menuPrincipal" aria-expanded="false" aria-label="Abrir menú"><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="menuPrincipal">
+                <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-2">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Inicio</a></li>
+                    <li class="nav-item"><a class="nav-link" href="catalogo.html">Explorar</a></li>
+                    <li class="nav-item"><a class="nav-link" href="publicar.html">Publicar</a></li>
+                    <li class="nav-item"><a class="nav-link" href="historia.html">Historia</a></li>
+                    <li class="nav-item"><a class="nav-link active" aria-current="page" href="cuenta.html" data-account-link>Mi cuenta</a></li>
+                    <li class="nav-item ms-lg-2"><a class="btn btn-crimson btn-sm px-3" href="publicar.html">Ofrecer una pieza</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main id="contenido" class="container py-5">
+        <header class="page-intro mb-4">
+            <span class="eyebrow">Tu espacio en Nodo</span>
+            <h1>Mi cuenta</h1>
+            <p class="lead text-muted">Regístrate para publicar refacciones y consultar las publicaciones que has compartido.</p>
+        </header>
+
+        <section id="zonaAcceso" class="row g-4">
+            <div class="col-lg-6">
+                <div class="account-auth-panel h-100">
+                    <span class="eyebrow">Nuevo en Nodo</span>
+                    <h2>Crear una cuenta</h2>
+                    <p class="text-muted">Registra tus datos para comenzar a publicar.</p>
+                    <form id="formRegistro" novalidate>
+                        <div class="mb-3">
+                            <label class="form-label" for="registroNombre">Nombre o nombre comercial *</label>
+                            <input class="form-control" id="registroNombre" type="text" maxlength="70" autocomplete="name">
+                            <div class="invalid-feedback">Escribe un nombre de al menos 2 caracteres.</div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="registroCorreo">Correo electrónico *</label>
+                            <input class="form-control" id="registroCorreo" type="email" maxlength="120" autocomplete="email" placeholder="tu@correo.com">
+                            <div class="invalid-feedback">Ingresa un correo válido.</div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="registroPassword">Contraseña *</label>
+                            <input class="form-control" id="registroPassword" type="password" autocomplete="new-password" placeholder="Mínimo 8 caracteres">
+                            <div class="invalid-feedback">La contraseña debe tener al menos 8 caracteres.</div>
+                        </div>
+                        <button class="btn btn-crimson" type="submit">Crear cuenta</button>
+                        <div class="alert d-none mt-3" id="mensajeRegistro" role="alert"></div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="col-lg-6">
+                <div class="account-auth-panel h-100">
+                    <span class="eyebrow">Ya tienes una cuenta</span>
+                    <h2>Iniciar sesión</h2>
+                    <p class="text-muted">Accede a tu panel para revisar tus publicaciones.</p>
+                    <form id="formLogin" novalidate>
+                        <div class="mb-3">
+                            <label class="form-label" for="loginCorreo">Correo electrónico *</label>
+                            <input class="form-control" id="loginCorreo" type="email" autocomplete="email">
+                            <div class="invalid-feedback">Ingresa el correo con el que te registraste.</div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="loginPassword">Contraseña *</label>
+                            <input class="form-control" id="loginPassword" type="password" autocomplete="current-password">
+                            <div class="invalid-feedback">Escribe tu contraseña.</div>
+                        </div>
+                        <button class="btn btn-outline-light" type="submit">Entrar a mi cuenta</button>
+                        <div class="alert d-none mt-3" id="mensajeLogin" role="alert"></div>
+                    </form>
+                </div>
+            </div>
+            <div class="col-12">
+                <p class="small text-muted mb-0">Las cuentas y sesiones se guardan únicamente en este navegador. No utilices contraseñas reales ni las que uses en otros servicios.</p>
+            </div>
+        </section>
+
+        <section id="panelCuenta" class="d-none">
+            <div class="account-welcome d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
+                <div>
+                    <span class="eyebrow">Panel de usuario</span>
+                    <h2 class="mb-1">Hola, <span id="nombreCuenta"></span></h2>
+                    <p class="text-muted mb-0" id="correoCuenta"></p>
+                </div>
+                <div class="d-flex flex-wrap gap-2">
+                    <a class="btn btn-crimson" href="publicar.html">Publicar refacción</a>
+                    <button class="btn btn-outline-light" id="cerrarSesion" type="button">Cerrar sesión</button>
+                </div>
+            </div>
+
+            <div class="account-summary mb-4">
+                <span class="eyebrow">Tu actividad</span>
+                <strong id="cantidadPublicaciones">0 publicaciones</strong>
+                <p class="text-muted mb-0">Aquí aparecen las refacciones que has registrado desde esta cuenta en este navegador.</p>
+            </div>
+
+            <div class="section-heading mb-3">
+                <div><span class="eyebrow">Administración</span><h2>Mis publicaciones</h2></div>
+            </div>
+            <div id="misPublicaciones" class="account-listings"></div>
+            <div id="sinPublicacionesCuenta" class="empty-state">
+                <h2>Aún no tienes publicaciones</h2>
+                <p class="text-muted">Cuando publiques una refacción, podrás consultarla y eliminarla desde este panel.</p>
+                <a class="btn btn-crimson" href="publicar.html">Publicar mi primera pieza</a>
+            </div>
+            <p class="small text-muted mt-4">Las publicaciones de ejemplo del catálogo no aparecen aquí porque no pertenecen a tu cuenta.</p>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container py-4">
+            <div class="row g-3 align-items-center">
+                <div class="col-md"><a class="footer-brand" href="index.html">NODO <span>REFACCIONES</span></a><p class="small footer-tagline mb-0">Encuentra la pieza. Conecta con quien la tiene.</p></div>
+                <div class="col-md-auto footer-links"><a href="historia.html">Historia</a><a href="catalogo.html">Explorar</a><a href="publicar.html">Publicar</a><a href="cuenta.html">Mi cuenta</a></div>
+                <div class="col-12"><div class="footer-bottom">© <span class="current-year"></span> Nodo Refacciones · Proyecto académico de FrontEnd.</div></div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+    <script src="js/main.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/cuenta.js"></script>
+</body>
+</html>
