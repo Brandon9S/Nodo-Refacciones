@@ -80,7 +80,3 @@ Todavía no hay base de datos, pero la interfaz ya trabaja con datos organizados
 | Enlace de la publicación original | `enlace_externo` |
 
 Hoy los datos se guardan en el navegador. Todo el acceso a ellos pasa por dos funciones de `js/main.js` (`NodoApp.leerGuardadas()` y `NodoApp.guardar()`) y por `js/auth.js`. Cuando exista la base de datos, solo esas funciones cambiarán para pedir y enviar la información al servidor; los formularios, las validaciones y las tarjetas seguirán igual.
-
-## Publicación en GitHub Pages
-
-Sube el contenido de esta carpeta a la raíz de un repositorio GitHub. En el repositorio, entra a **Settings → Pages**, selecciona la rama principal y la carpeta `/ (root)`, y guarda. La publicación puede tardar unos minutos en estar disponible. Verifica que todos los nombres y rutas respeten mayúsculas y minúsculas.
