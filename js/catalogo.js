@@ -13,6 +13,8 @@ const parametros = new URLSearchParams(window.location.search);
 campoTexto.value = parametros.get("q") || "";
 campoCategoria.value = parametros.get("categoria") || "";
 
+let todasLasPublicaciones = [];   // se llena una vez con lo que regresa el servidor
+
 function filtrar() {
     const texto = campoTexto.value.trim().toLowerCase();
     const categoria = campoCategoria.value;
@@ -20,7 +22,7 @@ function filtrar() {
     const marca = campoMarca.value.toLowerCase();
 
     // Se quedan las publicaciones que cumplen todos los filtros
-    const resultado = NodoApp.obtenerPublicaciones().filter((p) => {
+    const resultado = todasLasPublicaciones.filter((p) => {
         const todoElTexto = (p.titulo + " " + p.categoria + " " + p.marca + " " + p.modelo + " "
             + p.anio + " " + p.descripcion + " " + p.vendedor).toLowerCase();
 
@@ -62,4 +64,8 @@ campoMarca.addEventListener("change", filtrar);
 document.querySelector("#limpiarFiltros").addEventListener("click", limpiar);
 document.querySelector("#limpiarDesdeVacio").addEventListener("click", limpiar);
 
-filtrar();
+// Primero se piden las publicaciones al servidor y luego se muestran
+NodoApp.obtenerPublicaciones().then((publicaciones) => {
+    todasLasPublicaciones = publicaciones;
+    filtrar();
+});

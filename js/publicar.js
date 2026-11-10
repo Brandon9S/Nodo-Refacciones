@@ -199,7 +199,7 @@ if (sesion === null) {
         if (intentoEnvio) validarFormulario(false);
     });
 
-    formulario.addEventListener("submit", (evento) => {
+    formulario.addEventListener("submit", async (evento) => {
         evento.preventDefault();
         mensajeExito.classList.add("d-none");
         intentoEnvio = true;
@@ -207,9 +207,9 @@ if (sesion === null) {
         // Si hay errores, no se guarda nada
         if (!validarFormulario(true)) return;
 
+        // Datos que se envían a php/guardar_publicacion.php
+        // (el servidor pone el id y el vendedor a partir de la sesión)
         const publicacion = {
-            id: "local-" + Date.now(),
-            idUsuario: sesion.idUsuario,
             titulo: valor("titulo"),
             categoria: valor("categoria"),
             condicion: condicionElegida(),
@@ -222,19 +222,25 @@ if (sesion === null) {
             version: valor("versionMoto"),
             color: valor("colorMoto"),
             modalidad: valor("modalidad"),
-            vendedor: sesion.nombre,
             contacto: valor("contacto"),
-            enlace: valor("enlaceExterno"),
-            imagen: "assets/img/refaccion-placeholder.svg",
-            ejemplo: false
+            enlace: valor("enlaceExterno")
         };
 
-        // La publicación nueva va al principio de la lista
-        const guardadas = NodoApp.leerGuardadas();
-        guardadas.unshift(publicacion);
-        NodoApp.guardar(guardadas);
+        // Se envía al servidor y se espera su respuesta
+        const respuesta = await NodoApp.pedirJSON("php/guardar_publicacion.php", publicacion);
+
+        if (!respuesta.ok) {
+            // Si el servidor rechaza los datos, el formulario se queda como está
+            mensajeExito.textContent = respuesta.error;
+            mensajeExito.classList.remove("alert-success");
+            mensajeExito.classList.add("alert-danger");
+            mensajeExito.classList.remove("d-none");
+            return;
+        }
 
         limpiarFormulario();
+        mensajeExito.classList.remove("alert-danger");
+        mensajeExito.classList.add("alert-success");
         mensajeExito.innerHTML = 'Tu artículo se ha publicado. <a class="alert-link" href="cuenta.html">Ver mi panel</a> o <a class="alert-link" href="catalogo.html">explorar el catálogo</a>.';
         mensajeExito.classList.remove("d-none");
     });

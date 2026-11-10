@@ -1,15 +1,10 @@
 "use strict";
 
-// Cuentas en LocalStorage; la sesión en SessionStorage (se cierra al cerrar la pestaña)
+// Las cuentas viven en MySQL (tabla usuarios) y la sesión se valida en el servidor (php/login.php).
+// Aquí solo se guarda en SessionStorage una copia de los datos de la sesión
+// para que el menú y las páginas sepan al instante si hay alguien conectado.
 const NodoAuth = {
-    claveUsuarios: "nodoUsuarios",
     claveSesion: "nodoSesion",
-
-    leerUsuarios() {
-        const texto = localStorage.getItem(this.claveUsuarios);
-        if (texto === null) return [];
-        return JSON.parse(texto);
-    },
 
     obtenerSesion() {
         const texto = sessionStorage.getItem(this.claveSesion);
@@ -17,52 +12,37 @@ const NodoAuth = {
         return JSON.parse(texto);
     },
 
-    guardarSesion(usuario) {
-        const sesion = { idUsuario: usuario.id, nombre: usuario.nombre, correo: usuario.correo };
+    guardarSesion(sesion) {
         sessionStorage.setItem(this.claveSesion, JSON.stringify(sesion));
     },
 
     // Regresa el texto del error, o "" si todo salió bien
-    registrar(nombre, correo, contrasena) {
-        const usuarios = this.leerUsuarios();
-        const correoLimpio = correo.trim().toLowerCase();
-
-        for (let i = 0; i < usuarios.length; i++) {
-            if (usuarios[i].correo === correoLimpio) {
-                return "Ya existe una cuenta con ese correo en este navegador.";
-            }
-        }
-
-        const usuario = {
-            id: "u" + Date.now(),
+    async registrar(nombre, correo, contrasena) {
+        const respuesta = await NodoApp.pedirJSON("php/registrar.php", {
             nombre: nombre.trim(),
-            correo: correoLimpio,
+            correo: correo.trim(),
             contrasena: contrasena
-        };
-        usuarios.push(usuario);
-        localStorage.setItem(this.claveUsuarios, JSON.stringify(usuarios));
-        this.guardarSesion(usuario);
+        });
+        if (!respuesta.ok) return respuesta.error;
+
+        this.guardarSesion(respuesta.sesion);
         return "";
     },
 
     // Regresa el texto del error, o "" si los datos son correctos
-    iniciarSesion(correo, contrasena) {
-        const usuarios = this.leerUsuarios();
-        const correoLimpio = correo.trim().toLowerCase();
+    async iniciarSesion(correo, contrasena) {
+        const respuesta = await NodoApp.pedirJSON("php/login.php", {
+            correo: correo.trim(),
+            contrasena: contrasena
+        });
+        if (!respuesta.ok) return respuesta.error;
 
-        for (let i = 0; i < usuarios.length; i++) {
-            if (usuarios[i].correo === correoLimpio) {
-                if (usuarios[i].contrasena !== contrasena) {
-                    return "La contraseña no es correcta.";
-                }
-                this.guardarSesion(usuarios[i]);
-                return "";
-            }
-        }
-        return "No encontramos una cuenta con ese correo en este navegador.";
+        this.guardarSesion(respuesta.sesion);
+        return "";
     },
 
-    cerrarSesion() {
+    async cerrarSesion() {
+        await NodoApp.pedirJSON("php/logout.php", {});
         sessionStorage.removeItem(this.claveSesion);
     },
 

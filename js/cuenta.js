@@ -78,7 +78,7 @@ function validarLogin() {
 }
 
 // Si hay sesión se muestra el panel; si no, los formularios
-function mostrarPanel() {
+async function mostrarPanel() {
     const sesion = NodoAuth.obtenerSesion();
 
     if (sesion === null) {
@@ -92,8 +92,8 @@ function mostrarPanel() {
     document.querySelector("#nombreCuenta").textContent = sesion.nombre;
     document.querySelector("#correoCuenta").textContent = sesion.correo;
 
-    // Solo las publicaciones de esta cuenta
-    const propias = NodoApp.leerGuardadas().filter((p) => p.idUsuario === sesion.idUsuario);
+    // Solo las publicaciones de esta cuenta (el servidor filtra por la sesión)
+    const propias = await NodoApp.leerMias();
 
     if (propias.length === 1) {
         cantidad.textContent = "1 publicación";
@@ -130,13 +130,13 @@ function mostrarPanel() {
 }
 
 // Crear cuenta
-formRegistro.addEventListener("submit", (evento) => {
+formRegistro.addEventListener("submit", async (evento) => {
     evento.preventDefault();
     mensajeRegistro.classList.add("d-none");
     intentoRegistro = true;
     if (!validarRegistro()) return;
 
-    const error = NodoAuth.registrar(campoRegNombre.value, campoRegCorreo.value, campoRegPassword.value);
+    const error = await NodoAuth.registrar(campoRegNombre.value, campoRegCorreo.value, campoRegPassword.value);
     if (error !== "") {
         mostrarAviso(mensajeRegistro, error);
         return;
@@ -149,13 +149,13 @@ formRegistro.addEventListener("submit", (evento) => {
 });
 
 // Iniciar sesión
-formLogin.addEventListener("submit", (evento) => {
+formLogin.addEventListener("submit", async (evento) => {
     evento.preventDefault();
     mensajeLogin.classList.add("d-none");
     intentoLogin = true;
     if (!validarLogin()) return;
 
-    const error = NodoAuth.iniciarSesion(campoLoginCorreo.value, campoLoginPassword.value);
+    const error = await NodoAuth.iniciarSesion(campoLoginCorreo.value, campoLoginPassword.value);
     if (error !== "") {
         mostrarAviso(mensajeLogin, error);
         return;
@@ -176,20 +176,19 @@ formLogin.addEventListener("input", () => {
 });
 
 // Cerrar sesión
-document.querySelector("#cerrarSesion").addEventListener("click", () => {
-    NodoAuth.cerrarSesion();
+document.querySelector("#cerrarSesion").addEventListener("click", async () => {
+    await NodoAuth.cerrarSesion();
     NodoAuth.actualizarEnlaces();
     mostrarPanel();
 });
 
 // Eliminar una publicación propia (un solo listener para toda la lista)
-listaPanel.addEventListener("click", (evento) => {
+listaPanel.addEventListener("click", async (evento) => {
     const id = evento.target.dataset.eliminar;
     if (id === undefined) return;
     if (!confirm("¿Quieres eliminar esta publicación de tu panel?")) return;
 
-    const restantes = NodoApp.leerGuardadas().filter((p) => p.id !== id);
-    NodoApp.guardar(restantes);
+    await NodoApp.pedirJSON("php/eliminar_publicacion.php", { id: Number(id) });
     mostrarPanel();
 });
 

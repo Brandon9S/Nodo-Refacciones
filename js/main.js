@@ -169,22 +169,45 @@ if (calculadora) {
 
 // Funciones compartidas por las páginas que muestran publicaciones
 const NodoApp = {
-    claveGuardadas: "nodoPublicaciones",
-
-    // Publicaciones que crea el usuario (se guardan en LocalStorage)
-    leerGuardadas() {
-        const texto = localStorage.getItem(this.claveGuardadas);
-        if (texto === null) return [];
-        return JSON.parse(texto);
+    // Habla con un script PHP usando fetch (AJAX con JSON).
+    // Sin datos hace una petición GET; con datos envía un POST con JSON.
+    // Siempre regresa un objeto con "ok" (true o false) y, si falló, "error".
+    async pedirJSON(url, datos) {
+        try {
+            let respuesta;
+            if (datos === undefined) {
+                respuesta = await fetch(url);
+            } else {
+                respuesta = await fetch(url, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(datos)
+                });
+            }
+            return await respuesta.json();
+        } catch (error) {
+            return { ok: false, error: "No se pudo conectar con el servidor. Abre el sitio desde http://localhost/ con Apache y MySQL encendidos." };
+        }
     },
 
-    guardar(lista) {
-        localStorage.setItem(this.claveGuardadas, JSON.stringify(lista));
+    // Publicaciones guardadas en MySQL (php/publicaciones.php)
+    async leerGuardadas() {
+        const respuesta = await this.pedirJSON("php/publicaciones.php");
+        if (!respuesta.ok) return [];
+        return respuesta.publicaciones;
     },
 
-    // Publicaciones guardadas + publicaciones de ejemplo
-    obtenerPublicaciones() {
-        return this.leerGuardadas().concat(publicacionesEjemplo);
+    // Publicaciones de la cuenta con sesión (para el panel)
+    async leerMias() {
+        const respuesta = await this.pedirJSON("php/publicaciones.php?mias=1");
+        if (!respuesta.ok) return [];
+        return respuesta.publicaciones;
+    },
+
+    // Publicaciones de la base de datos + publicaciones de ejemplo
+    async obtenerPublicaciones() {
+        const guardadas = await this.leerGuardadas();
+        return guardadas.concat(publicacionesEjemplo);
     },
 
     // Cambia símbolos como < y & por texto seguro para mostrarlos en la página
