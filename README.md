@@ -7,7 +7,7 @@ Sitio web de refacciones para motocicleta desarrollado con HTML, CSS, JavaScript
 1. Instala XAMPP y abre su Panel de Control. Inicia **Apache** y **MySQL**.
 2. Copia la carpeta completa del proyecto en `C:\xampp\htdocs\` (queda `C:\xampp\htdocs\nodo-refacciones-ada4\`).
 3. Entra a `http://localhost/phpmyadmin`, abre la pestaña **Importar**, elige `database.sql` y pulsa **Continuar**. Se crea la base `nodo_refacciones` con sus dos tablas.
-4. Abre `http://localhost/nodo-refacciones-ada4/` en el navegador. No abras `index.html` con doble clic: sin el servidor, PHP no se ejecuta.
+4. Abre `http://localhost/NodoRefacciones-ADA4/` en el navegador. No abran `index.html` con doble clic: sin el servidor, PHP no se ejecuta.
 5. Bootstrap se carga desde jsDelivr, por lo que necesitas conexión a Internet.
 
 Si Apache no inicia porque el puerto 80 está ocupado, cambia el puerto en XAMPP (por ejemplo a 8080) y abre `http://localhost:8080/nodo-refacciones-ada4/`.
