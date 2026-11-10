@@ -1,4 +1,4 @@
-# Nodo Refacciones — ADA 4 (servidor local, PHP y MySQL)
+# Nodo Refacciones — ADA 4 (servidor local, PHP y MariaDB)
 
 Sitio web de refacciones para motocicleta desarrollado con HTML, CSS, JavaScript, Bootstrap 5.3.8, PHP y MySQL. En la ADA 3 los datos se guardaban en el navegador; en esta versión se guardan en una base de datos y los procesa un servidor local.
 
