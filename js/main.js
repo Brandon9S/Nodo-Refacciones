@@ -261,8 +261,9 @@ const NodoApp = {
         return "";
     },
 
-    // Arma el HTML de una tarjeta de publicación
-    crearTarjeta(p) {
+    // Arma el HTML de una tarjeta de publicación.
+    // Con conCarrito en true agrega el botón "Agregar al carrito" (solo en publicaciones de la base de datos).
+    crearTarjeta(p, conCarrito) {
         const e = this.escaparHtml;
         const enlaceContacto = this.enlaceContacto(p.contacto);
 
@@ -273,6 +274,11 @@ const NodoApp = {
             accion = `<a class="btn btn-outline-light btn-sm" href="${e(enlaceContacto)}">Contactar vendedor</a>`;
         } else {
             accion = `<span class="small text-muted">Contacto no disponible</span>`;
+        }
+
+        let botonCarrito = "";
+        if (conCarrito && !p.ejemplo) {
+            botonCarrito = `<button class="btn btn-crimson btn-sm w-100 mt-2" type="button" data-agregar="${p.id}">Agregar al carrito</button>`;
         }
 
         let nota = "";
@@ -293,6 +299,7 @@ const NodoApp = {
                         <p class="listing-description">${e(p.descripcion)}</p>
                         <div class="listing-meta"><span>${e(this.nombreModalidad(p.modalidad))}</span><span>${e(p.vendedor)}</span></div>
                         <div class="listing-bottom"><strong>${this.formatearPrecio(p.precio)}</strong>${accion}</div>
+                        ${botonCarrito}
                         ${nota}
                     </div>
                 </article>

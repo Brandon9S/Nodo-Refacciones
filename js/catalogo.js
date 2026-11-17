@@ -34,7 +34,7 @@ function filtrar() {
         return coincideTexto && coincideCategoria && coincideCondicion && coincideMarca;
     });
 
-    lista.innerHTML = resultado.map((p) => NodoApp.crearTarjeta(p)).join("");
+    lista.innerHTML = resultado.map((p) => NodoApp.crearTarjeta(p, true)).join("");
 
     if (resultado.length === 1) {
         contador.textContent = "1 publicación encontrada";
@@ -63,6 +63,33 @@ campoCondicion.addEventListener("change", filtrar);
 campoMarca.addEventListener("change", filtrar);
 document.querySelector("#limpiarFiltros").addEventListener("click", limpiar);
 document.querySelector("#limpiarDesdeVacio").addEventListener("click", limpiar);
+
+// Botón "Agregar al carrito": un solo listener para todas las tarjetas
+const avisoCatalogo = document.querySelector("#avisoCatalogo");
+
+function mostrarAvisoCatalogo(texto, tipo) {
+    avisoCatalogo.textContent = texto;
+    avisoCatalogo.className = "alert alert-" + tipo;
+}
+
+lista.addEventListener("click", async (evento) => {
+    const boton = evento.target.closest("button[data-agregar]");
+    if (!boton) return;
+
+    if (NodoAuth.obtenerSesion() === null) {
+        mostrarAvisoCatalogo("Inicia sesión desde «Mi cuenta» para usar el carrito.", "warning");
+        return;
+    }
+
+    const respuesta = await NodoApp.pedirJSON("php/carrito_agregar.php", { id: Number(boton.dataset.agregar) });
+    if (!respuesta.ok) {
+        mostrarAvisoCatalogo(respuesta.error, "danger");
+        return;
+    }
+
+    mostrarAvisoCatalogo("Refacción agregada al carrito.", "success");
+    NodoAuth.mostrarContador(respuesta.piezas);
+});
 
 // Primero se piden las publicaciones al servidor y luego se muestran
 NodoApp.obtenerPublicaciones().then((publicaciones) => {

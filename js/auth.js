@@ -46,6 +46,28 @@ const NodoAuth = {
         sessionStorage.removeItem(this.claveSesion);
     },
 
+    // Muestra en el menú cuántas piezas hay en el carrito (se oculta cuando son 0)
+    mostrarContador(piezas) {
+        const marcas = document.querySelectorAll("[data-carrito-contador]");
+        for (let i = 0; i < marcas.length; i++) {
+            marcas[i].textContent = piezas;
+            if (piezas > 0) {
+                marcas[i].classList.remove("d-none");
+            } else {
+                marcas[i].classList.add("d-none");
+            }
+        }
+    },
+
+    // Le pregunta al servidor cuántas piezas lleva el carrito de la sesión
+    async actualizarContador() {
+        if (this.obtenerSesion() === null) return;
+        const respuesta = await NodoApp.pedirJSON("php/carrito_listar.php");
+        if (respuesta.ok) {
+            this.mostrarContador(respuesta.piezas);
+        }
+    },
+
     // El enlace del menú dice "Mi panel" si hay sesión y "Mi cuenta" si no
     actualizarEnlaces() {
         const hayEnlace = this.obtenerSesion() !== null;
@@ -61,3 +83,4 @@ const NodoAuth = {
 };
 
 NodoAuth.actualizarEnlaces();
+NodoAuth.actualizarContador();

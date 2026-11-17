@@ -1,24 +1,24 @@
-# Nodo Refacciones — ADA 4 (servidor local, PHP y MariaDB)
+# Nodo Refacciones — ADA 5 (carrito de compras con sesiones)
 
-Sitio web de refacciones para motocicleta desarrollado con HTML, CSS, JavaScript, Bootstrap 5.3.8, PHP y MySQL. En la ADA 3 los datos se guardaban en el navegador; en esta versión se guardan en una base de datos y los procesa un servidor local.
+Sitio web de refacciones para motocicleta desarrollado con HTML, CSS, JavaScript, Bootstrap 5.3.8, PHP y MySQL. En la ADA 3 los datos se guardaban en el navegador; en la ADA 4 pasaron a una base de datos con un servidor local; en la ADA 5 se agregó un carrito de compras que se guarda en la sesión de PHP.
 
 ## Cómo ejecutarlo con XAMPP
 
 1. Instala XAMPP y abre su Panel de Control. Inicia **Apache** y **MySQL**.
-2. Copia la carpeta completa del proyecto en `C:\xampp\htdocs\` (queda `C:\xampp\htdocs\nodo-refacciones-ada4\`).
+2. Copia la carpeta completa del proyecto en `C:\xampp\htdocs\` (queda `C:\xampp\htdocs\NodoRefacciones\`).
 3. Entra a `http://localhost/phpmyadmin`, abre la pestaña **Importar**, elige `database.sql` y pulsa **Continuar**. Se crea la base `nodo_refacciones` con sus dos tablas.
-4. Abre `http://localhost/nodo-refacciones-ada4/` en el navegador. No abras `index.html` con doble clic: sin el servidor, PHP no se ejecuta.
+   (Opcional) Importa también `datos_ejemplo.sql` para tener refacciones de prueba en la base de datos.
+4. Abre `http://localhost/NodoRefacciones/` en el navegador. No abras `index.html` con doble clic: sin el servidor, PHP no se ejecuta.
 5. Bootstrap se carga desde jsDelivr, por lo que necesitas conexión a Internet.
 
-Si Apache no inicia porque el puerto 80 está ocupado, cambia el puerto en XAMPP (por ejemplo a 8080) y abre `http://localhost:8080/nodo-refacciones-ada4/`.
+Si Apache no inicia porque el puerto 80 está ocupado, cambia el puerto en XAMPP (por ejemplo a 8080) y abre `http://localhost:8080/NodoRefacciones/`.
 
 ## Estructura
 
-- `index.html`, `historia.html`, `catalogo.html`, `publicar.html`, `cuenta.html`: las cinco páginas del sitio.
+- `index.html`, `historia.html`, `catalogo.html`, `publicar.html`, `cuenta.html`, `carrito.html`: las seis páginas del sitio.
 - `css/styles.css`: estilos propios y paleta grafito/carmesí.
-- `js/`: `main.js` (fecha, calculadora y funciones compartidas), `auth.js` (cuentas y sesión), `publicar.js` (validación y envío del formulario), `catalogo.js`, `home.js`, `cuenta.js` y `data.js` (publicaciones de ejemplo).
-- `php/`: scripts que se ejecutan en el servidor (ver abajo).
-- `database.sql`: crea la base de datos y las tablas.
+- `js/`: `main.js` (fecha, calculadora y funciones compartidas), `auth.js` (cuentas y sesión), `publicar.js` (validación y envío del formulario), `catalogo.js`, `home.js`, `cuenta.js`, `carrito.js` y `data.js` (publicaciones de ejemplo).
+- `php/`: scripts que se ejecutan en el servidor.
 - `assets/img/`: favicon, banner e imagen de las publicaciones.
 
 ## Scripts del lado del servidor (`php/`)
@@ -34,6 +34,10 @@ El JavaScript les envía y recibe datos en formato JSON con `fetch()` (AJAX). To
 | `guardar_publicacion.php` | Con sesión iniciada, valida el formulario por segunda vez y guarda la refacción en `publicaciones`. |
 | `publicaciones.php` | Regresa las publicaciones de la base de datos (todas, o solo las propias con `?mias=1`). |
 | `eliminar_publicacion.php` | Borra una publicación, solo si es de la cuenta con sesión. |
+| `carrito_agregar.php` | Agrega una refacción al carrito (o suma 1 si ya estaba). |
+| `carrito_modificar.php` | Cambia la cantidad de una refacción del carrito (1 a 99). |
+| `carrito_eliminar.php` | Quita una refacción del carrito. |
+| `carrito_listar.php` | Regresa el contenido del carrito con precios de MySQL, el total y el nombre del usuario de la sesión. |
 
 La validación de JavaScript sigue en el navegador para dar mensajes rápidos; PHP vuelve a validar porque lo que llega al servidor siempre puede venir de fuera del formulario.
 
@@ -73,13 +77,20 @@ La validación de JavaScript sigue en el navegador para dar mensajes rápidos; P
 
 Una cuenta puede tener muchas publicaciones; cada publicación pertenece a una sola cuenta.
 
+## Carrito de compras (ADA 5)
+
+- El carrito vive en la sesión de PHP: `$_SESSION["carrito"]` es un arreglo con el id de la publicación como llave y la cantidad como valor. No usa una tabla nueva; los datos y precios se consultan en `publicaciones` cada vez que se muestra el carrito.
+- Se necesita sesión iniciada para usarlo. Al cerrar sesión, el carrito se vacía.
+- `carrito.html` + `js/carrito.js` muestran el carrito, con el nombre del usuario tomado de la sesión del servidor.
+- En `catalogo.html` cada publicación de la base de datos tiene el botón "Agregar al carrito" (las publicaciones demostrativas de `data.js` no, porque no están en la base de datos).
+
 ## Almacenamiento
 
 - **MySQL:** cuentas y publicaciones.
-- **Sesión de PHP:** quién tiene la sesión iniciada (la valida el servidor en cada petición).
+- **Sesión de PHP:** quién tiene la sesión iniciada y el contenido del carrito (los valida el servidor en cada petición).
 - **`sessionStorage`:** copia del nombre y correo de la sesión, solo para que el menú muestre "Mi panel" sin esperar al servidor.
 
-Las contraseñas se guardan sin cifrar porque es un proyecto académico; usa contraseñas de prueba. Las tres publicaciones de `js/data.js` son ejemplos demostrativos y no están en la base de datos.
+Las contraseñas se guardan sin cifrar, usa contraseñas de prueba. Las tres publicaciones de `js/data.js` son ejemplos demostrativos y no están en la base de datos.
 
 ## Funcionalidades
 
@@ -89,4 +100,5 @@ Las contraseñas se guardan sin cifrar porque es un proyecto académico; usa con
 - Registro, inicio y cierre de sesión con cuentas guardadas en MySQL.
 - Publicar refacciones, verlas en el catálogo y en el inicio, y eliminar las propias desde el panel.
 - Filtros de catálogo por texto, categoría, condición y marca.
+- Carrito de compras: agregar, modificar cantidad, quitar y listar refacciones, guardado en la sesión de PHP.
 - Bootstrap 5.3.8 para componentes y diseño adaptable.

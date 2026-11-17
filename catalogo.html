@@ -16,7 +16,7 @@
             <a class="navbar-brand brand-lockup" href="index.html"><img src="assets/img/favicon_nodo.png" alt="" width="34" height="34"><span>NODO <small>REFACCIONES</small></span></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuPrincipal" aria-controls="menuPrincipal" aria-expanded="false" aria-label="Abrir menú"><span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse" id="menuPrincipal"><ul class="navbar-nav ms-auto align-items-lg-center gap-lg-2">
-                <li class="nav-item"><a class="nav-link" href="index.html">Inicio</a></li><li class="nav-item"><a class="nav-link active" aria-current="page" href="catalogo.html">Explorar</a></li><li class="nav-item"><a class="nav-link" href="publicar.html">Publicar</a></li><li class="nav-item"><a class="nav-link" href="historia.html">Historia</a></li><li class="nav-item"><a class="nav-link" href="cuenta.html" data-account-link>Mi cuenta</a></li>
+                <li class="nav-item"><a class="nav-link" href="index.html">Inicio</a></li><li class="nav-item"><a class="nav-link active" aria-current="page" href="catalogo.html">Explorar</a></li><li class="nav-item"><a class="nav-link" href="publicar.html">Publicar</a></li><li class="nav-item"><a class="nav-link" href="historia.html">Historia</a></li><li class="nav-item"><a class="nav-link" href="cuenta.html" data-account-link>Mi cuenta</a></li><li class="nav-item"><a class="nav-link" href="carrito.html">Carrito <span class="badge text-bg-secondary d-none" data-carrito-contador>0</span></a></li>
                     <li class="nav-item ms-lg-2"><a class="btn btn-crimson btn-sm px-3" href="publicar.html">Ofrecer una pieza</a></li>
             </ul></div>
         </div>
@@ -34,6 +34,7 @@
             </div>
         </section>
         <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3"><p class="small text-muted mb-0" id="contadorResultados" aria-live="polite">Cargando resultados…</p><a class="text-link" href="publicar.html">¿Tienes una pieza? Publícala →</a></div>
+        <div id="avisoCatalogo" class="d-none" role="status" aria-live="polite"></div>
         <div class="row g-3" id="listaPublicaciones"></div>
         <div class="empty-state d-none" id="sinResultados"><h2>No encontramos publicaciones</h2><p class="text-muted">Prueba con otros términos o elimina algunos filtros.</p><button class="btn btn-outline-light" id="limpiarDesdeVacio" type="button">Limpiar búsqueda</button></div>
     </main>

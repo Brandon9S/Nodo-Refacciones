@@ -33,7 +33,7 @@ function exigirSesion() {
     return $_SESSION["usuario"];
 }
 
-$conexion = @mysqli_connect("localhost", "root", "", "nodo_refacciones");
+$conexion = @mysqli_connect("sql313.infinityfree.com", "if0_43466861", "Nodo011720", "if0_43466861_nodo");
 if (!$conexion) {
     responder(array("ok" => false, "error" => "No se pudo conectar a la base de datos. ¿Está encendido MySQL?"), 500);
 }

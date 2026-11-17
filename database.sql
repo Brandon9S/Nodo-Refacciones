@@ -1,11 +1,4 @@
 -- Base de datos de Nodo Refacciones (ADA 4)
--- Importar desde phpMyAdmin: pestaña "Importar" -> elegir este archivo -> Continuar.
-
-CREATE DATABASE IF NOT EXISTS nodo_refacciones
-  CHARACTER SET utf8mb4
-  COLLATE utf8mb4_general_ci;
-
-USE nodo_refacciones;
 
 -- Tabla 1: cuentas (formulario de cuenta.html)
 CREATE TABLE IF NOT EXISTS usuarios (
