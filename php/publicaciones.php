@@ -3,6 +3,7 @@
 // Regresa las publicaciones guardadas en MySQL, de la más nueva a la más antigua.
 //   publicaciones.php          -> todas (catálogo e inicio)
 //   publicaciones.php?mias=1   -> solo las de la cuenta con sesión (panel)
+//   publicaciones.php?id=5     -> una publicación propia (para editarla en publicar.html)
 // Cada publicación sale con los mismos nombres de campo que ya usa el JavaScript.
 
 require "conexion.php";
@@ -11,7 +12,12 @@ $columnas = "id_publicacion, id_usuario, titulo, categoria, condicion, precio, c
              marca_moto, modelo_moto, anio_moto, version_moto, color_moto, modalidad, vendedor, contacto, enlace_externo";
 $orden = "ORDER BY fecha_publicacion DESC, id_publicacion DESC";
 
-if (isset($_GET["mias"])) {
+if (isset($_GET["id"])) {
+    $sesion = exigirSesion();
+    $id = (int) $_GET["id"];
+    $consulta = mysqli_prepare($conexion, "SELECT $columnas FROM publicaciones WHERE id_publicacion = ? AND id_usuario = ?");
+    mysqli_stmt_bind_param($consulta, "ii", $id, $sesion["idUsuario"]);
+} elseif (isset($_GET["mias"])) {
     $sesion = exigirSesion();
     $consulta = mysqli_prepare($conexion, "SELECT $columnas FROM publicaciones WHERE id_usuario = ? $orden");
     mysqli_stmt_bind_param($consulta, "i", $sesion["idUsuario"]);

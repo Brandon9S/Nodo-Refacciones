@@ -1,11 +1,17 @@
--- Base de datos de Nodo Refacciones (ADA 4)
+-- Base de datos de Nodo Refacciones (ADA 4, actualizada en la ADA 6)
+-- Se importa DENTRO de una base ya creada (no trae CREATE DATABASE porque InfinityFree no lo permite):
+--   XAMPP:        en phpMyAdmin crea la base "nodo_refacciones" (utf8mb4_general_ci), ábrela e importa este archivo.
+--   InfinityFree: abre la base que creó el panel (if0_..._nodo) en su phpMyAdmin e importa este archivo.
+
+SET NAMES utf8mb4;
 
 -- Tabla 1: cuentas (formulario de cuenta.html)
+-- contrasena guarda el hash de password_hash() (60 caracteres con bcrypt; 255 por si cambia el algoritmo)
 CREATE TABLE IF NOT EXISTS usuarios (
   id_usuario INT AUTO_INCREMENT PRIMARY KEY,
   nombre     VARCHAR(70)  NOT NULL,
   correo     VARCHAR(100) NOT NULL UNIQUE,
-  contrasena VARCHAR(100) NOT NULL
+  contrasena VARCHAR(255) NOT NULL
 );
 
 -- Tabla 2: refacciones publicadas (formulario de publicar.html)

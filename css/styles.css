@@ -768,6 +768,12 @@ a:hover {
 .account-listing-info small {
     color: var(--nodo-muted);
 }
+.account-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem;
+    flex-shrink: 0;
+}
 @media (max-width: 575.98px) {
     .account-listing {
         align-items: flex-start;
@@ -778,7 +784,7 @@ a:hover {
         width: 84px;
         height: 84px;
     }
-    .account-delete {
+    .account-actions {
         margin-left: auto;
     }
 }

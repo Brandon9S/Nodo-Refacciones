@@ -1,3 +1,6 @@
 .DS_Store
 Thumbs.db
 .vscode/
+
+# Credenciales de la base de datos (cada servidor tiene su propio config.php)
+php/config.php

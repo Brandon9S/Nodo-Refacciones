@@ -41,6 +41,20 @@ const NodoAuth = {
         return "";
     },
 
+    // Pregunta al servidor (php/sesion.php) si la sesión sigue activa y actualiza la copia local.
+    // La sesión de PHP es la que manda: si el servidor la cerró, aquí también se borra.
+    async verificarSesion() {
+        const respuesta = await NodoApp.pedirJSON("php/sesion.php");
+        if (!respuesta.ok) return this.obtenerSesion();   // sin servidor no se cambia nada
+        if (respuesta.activa) {
+            this.guardarSesion(respuesta.sesion);
+        } else {
+            sessionStorage.removeItem(this.claveSesion);
+        }
+        this.actualizarEnlaces();
+        return this.obtenerSesion();
+    },
+
     async cerrarSesion() {
         await NodoApp.pedirJSON("php/logout.php", {});
         sessionStorage.removeItem(this.claveSesion);
@@ -82,5 +96,10 @@ const NodoAuth = {
     }
 };
 
+// Al cargar cualquier página: primero se confirma la sesión con el servidor y luego el contador del carrito.
+// Las páginas que dependen de la sesión esperan esta promesa.
 NodoAuth.actualizarEnlaces();
-NodoAuth.actualizarContador();
+NodoAuth.listo = NodoAuth.verificarSesion().then((sesion) => {
+    NodoAuth.actualizarContador();
+    return sesion;
+});

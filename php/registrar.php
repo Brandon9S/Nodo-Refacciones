@@ -31,14 +31,16 @@ if (mysqli_stmt_num_rows($buscar) > 0) {
 }
 mysqli_stmt_close($buscar);
 
-// Guardar el usuario
+// Guardar el usuario. La contraseña NO se guarda tal cual:
+// password_hash() crea un hash bcrypt (60 caracteres) que no se puede revertir.
+$hash = password_hash($contrasena, PASSWORD_DEFAULT);
 $insertar = mysqli_prepare($conexion, "INSERT INTO usuarios (nombre, correo, contrasena) VALUES (?, ?, ?)");
-mysqli_stmt_bind_param($insertar, "sss", $nombre, $correo, $contrasena);
+mysqli_stmt_bind_param($insertar, "sss", $nombre, $correo, $hash);
 if (!mysqli_stmt_execute($insertar)) {
     responder(array("ok" => false, "error" => "No se pudo crear la cuenta."), 500);
 }
 $idUsuario = mysqli_insert_id($conexion);
 
 // Iniciar sesión con la cuenta recién creada
-$_SESSION["usuario"] = array("idUsuario" => $idUsuario, "nombre" => $nombre, "correo" => $correo);
-responder(array("ok" => true, "sesion" => $_SESSION["usuario"]));
+$sesion = iniciarSesionUsuario($idUsuario, $nombre, $correo);
+responder(array("ok" => true, "sesion" => $sesion));

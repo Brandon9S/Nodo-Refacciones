@@ -23,7 +23,7 @@
     </nav>
 
     <main id="contenido" class="container py-5">
-        <header class="page-intro mb-4"><span class="eyebrow">Comparte lo que tienes</span><h1>Publicar una refacción</h1><p class="lead text-muted">Registra los datos de la pieza y elige cómo quieres recibir interesados.</p></header>
+        <header class="page-intro mb-4"><span class="eyebrow">Comparte lo que tienes</span><h1 id="tituloPagina">Publicar una refacción</h1><p class="lead text-muted" id="introPagina">Registra los datos de la pieza y elige cómo quieres recibir interesados.</p></header>
         <div class="alert alert-warning d-none mb-4" id="avisoCuentaPublicar" role="status">
             Para publicar una refacción primero necesitas <a href="cuenta.html" class="alert-link">iniciar sesión o crear una cuenta</a>.
         </div>
@@ -57,7 +57,7 @@
                         <div class="col-12 d-none" id="grupoEnlace"><label class="form-label" for="enlaceExterno">Enlace de la publicación original *</label><input class="form-control" id="enlaceExterno" name="enlaceExterno" type="url" placeholder="https://..."><div class="invalid-feedback">Ingresa una dirección web válida que comience con https:// o http://.</div></div>
                     </div>
                     <div class="form-check mt-4"><input class="form-check-input" type="checkbox" id="confirmacion"><label class="form-check-label" for="confirmacion">Confirmo que la información proporcionada es correcta. *</label><div class="invalid-feedback">Debes confirmar la información antes de publicar.</div></div>
-                    <div class="d-flex flex-wrap gap-2 mt-4"><button class="btn btn-crimson" type="submit">Publicar refacción</button><button class="btn btn-outline-light" type="button" id="limpiarFormulario">Limpiar formulario</button></div>
+                    <div class="d-flex flex-wrap gap-2 mt-4"><button class="btn btn-crimson" type="submit" id="botonEnviar">Publicar refacción</button><button class="btn btn-outline-light" type="button" id="limpiarFormulario">Limpiar formulario</button></div>
                     <div class="alert alert-success mt-3 d-none" id="mensajeExito" role="status"></div>
                 </form>
             </div>

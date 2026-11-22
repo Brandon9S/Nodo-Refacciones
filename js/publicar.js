@@ -18,8 +18,13 @@ const campoEnlace = document.querySelector("#enlaceExterno");
 const grupoEnlace = document.querySelector("#grupoEnlace");
 const campoConfirmacion = document.querySelector("#confirmacion");
 const mensajeExito = document.querySelector("#mensajeExito");
-const sesion = NodoAuth.obtenerSesion();
+const botonEnviar = document.querySelector("#botonEnviar");
+let sesion = null;
 let intentoEnvio = false;   // true después de pulsar "Publicar" por primera vez
+
+// Si la dirección es publicar.html?editar=5, el formulario edita la publicación 5 (UPDATE)
+const idEditar = Number(new URLSearchParams(location.search).get("editar")) || 0;
+const modoEdicion = idEditar > 0;
 
 // Regresa el texto de un campo sin espacios al inicio ni al final
 function valor(id) {
@@ -179,17 +184,92 @@ function limpiarFormulario() {
     actualizarModalidad();
 }
 
-if (sesion === null) {
-    // Sin sesión no se puede publicar
-    avisoCuenta.classList.remove("d-none");
-} else {
+// Muestra un mensaje de error o de éxito debajo del formulario
+function mostrarMensaje(html, tipo) {
+    mensajeExito.innerHTML = html;
+    mensajeExito.classList.remove("alert-success", "alert-danger");
+    mensajeExito.classList.add("alert-" + tipo);
+    mensajeExito.classList.remove("d-none");
+}
+
+// Modo edición: pide la publicación al servidor y llena el formulario con sus datos
+async function cargarParaEditar() {
+    const respuesta = await NodoApp.pedirJSON("php/publicaciones.php?id=" + idEditar);
+    if (!respuesta.ok || respuesta.publicaciones.length === 0) {
+        mostrarMensaje('No se encontró esa publicación en tu cuenta. <a class="alert-link" href="cuenta.html">Volver a mi panel</a>.', "danger");
+        botonEnviar.disabled = true;
+        return;
+    }
+    const p = respuesta.publicaciones[0];
+
+    document.querySelector("#tituloPagina").textContent = "Editar publicación";
+    document.querySelector("#introPagina").textContent = "Modifica los datos de tu refacción y guarda los cambios.";
+    document.title = "Editar publicación | Nodo Refacciones";
+    botonEnviar.textContent = "Guardar cambios";
+
+    campoTitulo.value = p.titulo;
+    campoCategoria.value = p.categoria;
+    const radio = document.querySelector('input[name="condicion"][value="' + p.condicion + '"]');
+    if (radio) radio.checked = true;
+    campoPrecio.value = p.precio;
+    document.querySelector("#codigoPieza").value = p.codigo;
+    campoDescripcion.value = p.descripcion;
+    campoMarca.value = p.marca;
+    campoModelo.value = p.modelo;
+    campoAnio.value = p.anio;
+    document.querySelector("#versionMoto").value = p.version;
+    document.querySelector("#colorMoto").value = p.color;
+    campoModalidad.value = p.modalidad;
+    actualizarModalidad();
+    campoContacto.value = p.contacto;
+    campoEnlace.value = p.enlace;
+}
+
+// Arma el objeto que se envía al servidor
+// (el servidor pone el id del usuario y el vendedor a partir de la sesión)
+function datosFormulario() {
+    return {
+        titulo: valor("titulo"),
+        categoria: valor("categoria"),
+        condicion: condicionElegida(),
+        precio: Number(valor("precio")),
+        codigo: valor("codigoPieza"),
+        descripcion: valor("descripcion"),
+        marca: valor("marcaMoto"),
+        modelo: valor("modeloMoto"),
+        anio: valor("anioMoto"),
+        version: valor("versionMoto"),
+        color: valor("colorMoto"),
+        modalidad: valor("modalidad"),
+        contacto: valor("contacto"),
+        enlace: valor("enlaceExterno")
+    };
+}
+
+async function iniciarPagina() {
+    // La sesión se confirma con el servidor antes de mostrar el formulario
+    sesion = await NodoAuth.listo;
+
+    if (sesion === null) {
+        // Sin sesión no se puede publicar ni editar
+        avisoCuenta.classList.remove("d-none");
+        return;
+    }
+
     contenidoPublicar.classList.remove("d-none");
     campoVendedor.value = sesion.nombre;
     campoVendedor.readOnly = true;
     actualizarModalidad();
 
+    if (modoEdicion) {
+        await cargarParaEditar();
+    }
+
     campoModalidad.addEventListener("change", actualizarModalidad);
-    document.querySelector("#limpiarFormulario").addEventListener("click", limpiarFormulario);
+    document.querySelector("#limpiarFormulario").addEventListener("click", () => {
+        limpiarFormulario();
+        if (modoEdicion) cargarParaEditar();   // al editar, "limpiar" regresa a los datos guardados
+    });
 
     // Después del primer intento, los mensajes se actualizan mientras el usuario corrige
     formulario.addEventListener("input", () => {
@@ -207,41 +287,31 @@ if (sesion === null) {
         // Si hay errores, no se guarda nada
         if (!validarFormulario(true)) return;
 
-        // Datos que se envían a php/guardar_publicacion.php
-        // (el servidor pone el id y el vendedor a partir de la sesión)
-        const publicacion = {
-            titulo: valor("titulo"),
-            categoria: valor("categoria"),
-            condicion: condicionElegida(),
-            precio: Number(valor("precio")),
-            codigo: valor("codigoPieza"),
-            descripcion: valor("descripcion"),
-            marca: valor("marcaMoto"),
-            modelo: valor("modeloMoto"),
-            anio: valor("anioMoto"),
-            version: valor("versionMoto"),
-            color: valor("colorMoto"),
-            modalidad: valor("modalidad"),
-            contacto: valor("contacto"),
-            enlace: valor("enlaceExterno")
-        };
+        const datos = datosFormulario();
+        let url = "php/guardar_publicacion.php";        // CREATE
+        if (modoEdicion) {
+            url = "php/actualizar_publicacion.php";     // UPDATE
+            datos.id = idEditar;
+        }
 
-        // Se envía al servidor y se espera su respuesta
-        const respuesta = await NodoApp.pedirJSON("php/guardar_publicacion.php", publicacion);
+        botonEnviar.disabled = true;
+        const respuesta = await NodoApp.pedirJSON(url, datos);
+        botonEnviar.disabled = false;
 
         if (!respuesta.ok) {
             // Si el servidor rechaza los datos, el formulario se queda como está
-            mensajeExito.textContent = respuesta.error;
-            mensajeExito.classList.remove("alert-success");
-            mensajeExito.classList.add("alert-danger");
-            mensajeExito.classList.remove("d-none");
+            mostrarMensaje(NodoApp.escaparHtml(respuesta.error), "danger");
+            return;
+        }
+
+        if (modoEdicion) {
+            mostrarMensaje('Los cambios se guardaron. <a class="alert-link" href="cuenta.html">Volver a mi panel</a> o <a class="alert-link" href="catalogo.html">ver el catálogo</a>.', "success");
             return;
         }
 
         limpiarFormulario();
-        mensajeExito.classList.remove("alert-danger");
-        mensajeExito.classList.add("alert-success");
-        mensajeExito.innerHTML = 'Tu artículo se ha publicado. <a class="alert-link" href="cuenta.html">Ver mi panel</a> o <a class="alert-link" href="catalogo.html">explorar el catálogo</a>.';
-        mensajeExito.classList.remove("d-none");
+        mostrarMensaje('Tu artículo se ha publicado. <a class="alert-link" href="cuenta.html">Ver mi panel</a> o <a class="alert-link" href="catalogo.html">explorar el catálogo</a>.', "success");
     });
 }
+
+iniciarPagina();

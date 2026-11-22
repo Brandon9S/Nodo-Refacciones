@@ -79,7 +79,8 @@ function validarLogin() {
 
 // Si hay sesión se muestra el panel; si no, los formularios
 async function mostrarPanel() {
-    const sesion = NodoAuth.obtenerSesion();
+    // La sesión se confirma con el servidor antes de mostrar el panel
+    const sesion = await NodoAuth.verificarSesion();
 
     if (sesion === null) {
         zonaAcceso.classList.remove("d-none");
@@ -123,7 +124,10 @@ async function mostrarPanel() {
                     <strong>${NodoApp.formatearPrecio(p.precio)}</strong>
                     <small>${e(p.categoria)} · ${e(NodoApp.nombreModalidad(p.modalidad))}</small>
                 </div>
-                <button class="btn btn-outline-danger btn-sm account-delete" type="button" data-eliminar="${e(p.id)}" aria-label="Eliminar ${e(p.titulo)}">Eliminar</button>
+                <div class="account-actions">
+                    <a class="btn btn-outline-light btn-sm" href="publicar.html?editar=${e(p.id)}" aria-label="Editar ${e(p.titulo)}">Editar</a>
+                    <button class="btn btn-outline-danger btn-sm" type="button" data-eliminar="${e(p.id)}" aria-label="Eliminar ${e(p.titulo)}">Eliminar</button>
+                </div>
             </article>`;
     }
     listaPanel.innerHTML = html;
@@ -188,7 +192,8 @@ listaPanel.addEventListener("click", async (evento) => {
     if (id === undefined) return;
     if (!confirm("¿Quieres eliminar esta publicación de tu panel?")) return;
 
-    await NodoApp.pedirJSON("php/eliminar_publicacion.php", { id: Number(id) });
+    const respuesta = await NodoApp.pedirJSON("php/eliminar_publicacion.php", { id: Number(id) });
+    if (!respuesta.ok) alert(respuesta.error);
     mostrarPanel();
 });
 
