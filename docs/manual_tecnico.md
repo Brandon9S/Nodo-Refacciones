@@ -47,7 +47,7 @@ NodoRefacciones/
 │   ├── validar_publicacion.php
 │   ├── guardar_publicacion.php, publicaciones.php, actualizar_publicacion.php, eliminar_publicacion.php
 │   └── carrito_agregar.php, carrito_listar.php, carrito_modificar.php, carrito_eliminar.php
-├── database.sql, actualizar_ada6.sql, datos_ejemplo.sql
+├── database.sql, actualizar_ada6.sql
 └── docs/manual_usuario.md, docs/manual_tecnico.md
 ```
 
@@ -64,7 +64,6 @@ contrasena (hash)          marca_moto, modelo_moto, anio_moto, version_moto, col
 
 - `database.sql` crea las dos tablas (se importa dentro de una base ya creada).
 - `actualizar_ada6.sql` amplía `usuarios.contrasena` a `VARCHAR(255)` en bases que vienen de la ADA 4/5.
-- `datos_ejemplo.sql` crea la cuenta `demo@nodo.com` / `demo12345` y tres publicaciones.
 
 ## 5. Operaciones CRUD
 
@@ -103,14 +102,14 @@ Todas usan **consultas preparadas** (`mysqli_prepare` + `mysqli_stmt_bind_param`
 ## 8. Instalación local (XAMPP)
 
 1. Copiar el proyecto en `C:\xampp\htdocs\NodoRefacciones\` e iniciar Apache y MySQL.
-2. En `http://localhost/phpmyadmin` crear la base `nodo_refacciones` (`utf8mb4_general_ci`) e importar `database.sql` y, opcionalmente, `datos_ejemplo.sql`.
+2. En `http://localhost/phpmyadmin` crear la base `nodo_refacciones` (`utf8mb4_general_ci`) e importar `database.sql`.
 3. No se necesita `php/config.php`: sin él, `conexion.php` usa `localhost`, `root`, sin contraseña.
 4. Abrir `http://localhost/NodoRefacciones/`.
 
 ## 9. Despliegue en InfinityFree
 
 1. Crear la base en **MySQL Databases** y anotar servidor (`sqlXXX.infinityfree.com`), usuario, contraseña y nombre.
-2. En su phpMyAdmin, importar `database.sql` (y `datos_ejemplo.sql` si se desea).
+2. En su phpMyAdmin, importar `database.sql`.
 3. Copiar `php/config.ejemplo.php` como `php/config.php` y escribir los cuatro datos.
 4. Subir el proyecto a `htdocs/` con el File Manager o FTP (sin la carpeta `.git`).
 5. Verificar: crear cuenta, publicar, editar, eliminar, cerrar sesión.

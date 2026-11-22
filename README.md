@@ -10,7 +10,6 @@ Sitio web de refacciones para motocicleta desarrollado con HTML, CSS, JavaScript
 1. Instala XAMPP y abre su Panel de Control. Inicia **Apache** y **MySQL**.
 2. Copia la carpeta completa del proyecto en `C:\xampp\htdocs\` (queda `C:\xampp\htdocs\NodoRefacciones\`).
 3. Entra a `http://localhost/phpmyadmin`, crea la base `nodo_refacciones` (cotejamiento `utf8mb4_general_ci`), ábrela, ve a **Importar**, elige `database.sql` y pulsa **Continuar**. Se crean las dos tablas.
-   (Opcional) Importa también `datos_ejemplo.sql`: crea la cuenta `demo@nodo.com` / `demo12345` con tres refacciones.
    Si tu base viene de la ADA 4 o 5, en lugar de `database.sql` importa `actualizar_ada6.sql`.
 4. Abre `http://localhost/NodoRefacciones/` en el navegador. No abras `index.html` con doble clic: sin el servidor, PHP no se ejecuta.
 5. Bootstrap se carga desde jsDelivr, por lo que necesitas conexión a Internet.
@@ -23,7 +22,7 @@ Si Apache no inicia porque el puerto 80 está ocupado, cambia el puerto en XAMPP
 - `css/styles.css`: estilos propios y paleta grafito/carmesí.
 - `js/`: `main.js` (fecha, calculadora y funciones compartidas), `auth.js` (cuentas y sesión), `publicar.js` (validación y envío del formulario), `catalogo.js`, `home.js`, `cuenta.js`, `carrito.js` y `data.js` (publicaciones de ejemplo).
 - `php/`: scripts que se ejecutan en el servidor.
-- `database.sql`, `actualizar_ada6.sql`, `datos_ejemplo.sql`: estructura de la base, actualización desde la ADA 5 y datos de prueba.
+- `database.sql`, `actualizar_ada6.sql`: estructura de la base y actualización desde la ADA 5.
 - `docs/`: manual de usuario y manual técnico.
 - `assets/img/`: favicon, banner e imagen de las publicaciones.
 
@@ -116,7 +115,7 @@ Las contraseñas se guardan cifradas con `password_hash()` (bcrypt). Las cuentas
 ## Publicar en InfinityFree
 
 1. En el panel de InfinityFree crea la base de datos (**MySQL Databases**) y anota servidor, usuario, contraseña y nombre de la base.
-2. Abre su phpMyAdmin, entra a la base e importa `database.sql` (y, si quieres, `datos_ejemplo.sql`).
+2. Abre su phpMyAdmin, entra a la base e importa `database.sql`.
 3. Copia `php/config.ejemplo.php` como `php/config.php` y escribe ahí esos cuatro datos.
 4. Sube con el **File Manager** (o FTP) todo el proyecto a `htdocs/`, incluido `php/config.php`. No hace falta subir la carpeta `.git`.
 5. Abre la URL de tu sitio y prueba crear una cuenta.

@@ -4,7 +4,6 @@ Nodo Refacciones es un sitio para encontrar y publicar refacciones de motociclet
 
 <!-- PENDIENTE (borrar este comentario): reemplazar la dirección por la URL real del sitio publicado. -->
 **Dirección del sitio:** `https://TU-SITIO.infinityfreeapp.com`
-**Cuenta de prueba:** `demo@nodo.com` / `demo12345`
 
 ---
 
