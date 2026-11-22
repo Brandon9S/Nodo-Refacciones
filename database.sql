@@ -1,7 +1,5 @@
 -- Base de datos de Nodo Refacciones (ADA 4, actualizada en la ADA 6)
--- Se importa DENTRO de una base ya creada (no trae CREATE DATABASE porque InfinityFree no lo permite):
---   XAMPP:        en phpMyAdmin crea la base "nodo_refacciones" (utf8mb4_general_ci), ábrela e importa este archivo.
---   InfinityFree: abre la base que creó el panel (if0_..._nodo) en su phpMyAdmin e importa este archivo.
+-- No incluye CREATE DATABASE porque InfinityFree no lo permite: las tablas se crean en la base seleccionada.
 
 SET NAMES utf8mb4;
 

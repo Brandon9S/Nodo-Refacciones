@@ -1,10 +1,8 @@
 <?php
 // config.ejemplo.php
-// Copia este archivo como config.php y escribe los datos de tu base de datos.
-// config.php está en .gitignore: las contraseñas no se suben a GitHub.
-//
-// En XAMPP no hace falta: sin config.php se usa root sin contraseña y la base nodo_refacciones.
-// En InfinityFree los datos están en el panel, en "MySQL Databases".
+// Plantilla de config.php: datos de conexión de cada servidor (los valores XXX son de ejemplo).
+// config.php está en .gitignore, así que las contraseñas no llegan al repositorio.
+// Sin config.php, conexion.php usa los valores por defecto de XAMPP (root sin contraseña).
 
 return array(
     "servidor"   => "sqlXXX.infinityfree.com",

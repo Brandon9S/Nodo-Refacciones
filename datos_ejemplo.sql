@@ -1,6 +1,6 @@
 -- datos_ejemplo.sql (opcional)
 -- Crea una cuenta de prueba y tres publicaciones para la demostración.
--- Importar después de database.sql.
+-- Requiere las tablas de database.sql.
 --   Correo:     demo@nodo.com
 --   Contraseña: demo12345   (se guarda como hash bcrypt, igual que las cuentas nuevas)
 
