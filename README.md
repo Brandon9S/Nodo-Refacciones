@@ -10,7 +10,7 @@ Sitio web de refacciones para motocicleta desarrollado con HTML, CSS, JavaScript
 1. Instala XAMPP y abre su Panel de Control. Inicia **Apache** y **MySQL**.
 2. Copia la carpeta completa del proyecto en `C:\xampp\htdocs\` (queda `C:\xampp\htdocs\NodoRefacciones\`).
 3. Entra a `http://localhost/phpmyadmin`, crea la base `nodo_refacciones` (cotejamiento `utf8mb4_general_ci`), ábrela, ve a **Importar**, elige `database.sql` y pulsa **Continuar**. Se crean las dos tablas.
-   Si tu base viene de la ADA 4 o 5, en lugar de `database.sql` importa `actualizar_ada6.sql`.
+   Si tu base viene de la ADA 4 o 5, en lugar de `database.sql` importa `ampliar_contrasena.sql`.
 4. Abre `http://localhost/NodoRefacciones/` en el navegador. No abras `index.html` con doble clic: sin el servidor, PHP no se ejecuta.
 5. Bootstrap se carga desde jsDelivr, por lo que necesitas conexión a Internet.
 
@@ -22,7 +22,7 @@ Si Apache no inicia porque el puerto 80 está ocupado, cambia el puerto en XAMPP
 - `css/styles.css`: estilos propios y paleta grafito/carmesí.
 - `js/`: `main.js` (fecha, calculadora y funciones compartidas), `auth.js` (cuentas y sesión), `publicar.js` (validación y envío del formulario), `catalogo.js`, `home.js`, `cuenta.js`, `carrito.js` y `data.js` (publicaciones de ejemplo).
 - `php/`: scripts que se ejecutan en el servidor.
-- `database.sql`, `actualizar_ada6.sql`: estructura de la base y actualización desde la ADA 5.
+- `database.sql`, `ampliar_contrasena.sql`: estructura de la base y actualización desde la ADA 5.
 - `docs/`: manual de usuario y manual técnico.
 - `assets/img/`: favicon, banner e imagen de las publicaciones.
 

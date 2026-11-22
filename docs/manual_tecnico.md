@@ -47,7 +47,7 @@ NodoRefacciones/
 │   ├── validar_publicacion.php
 │   ├── guardar_publicacion.php, publicaciones.php, actualizar_publicacion.php, eliminar_publicacion.php
 │   └── carrito_agregar.php, carrito_listar.php, carrito_modificar.php, carrito_eliminar.php
-├── database.sql, actualizar_ada6.sql
+├── database.sql, ampliar_contrasena.sql
 └── docs/manual_usuario.md, docs/manual_tecnico.md
 ```
 
@@ -63,7 +63,7 @@ contrasena (hash)          marca_moto, modelo_moto, anio_moto, version_moto, col
 ```
 
 - `database.sql` crea las dos tablas (se importa dentro de una base ya creada).
-- `actualizar_ada6.sql` amplía `usuarios.contrasena` a `VARCHAR(255)` en bases que vienen de la ADA 4/5.
+- `ampliar_contrasena.sql` amplía `usuarios.contrasena` a `VARCHAR(255)` en bases que vienen de la ADA 4/5.
 
 ## 5. Operaciones CRUD
 
